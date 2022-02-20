@@ -14,19 +14,64 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
+  const contact = await contactsModel.getContactById(req.params.contactId); 
+  if (contact) {
+    return res.json({ 
+      status: 'succuess',
+      code: 200,
+      payload: {contact},
+    })    
+  } else {
+      return res.status(404).json({ 
+        status: 'error',
+        code: 404,
+        message: "Not found",
+      })    
+  }
 })
 
 router.post('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
+  const contact = await contactsModel.addContact(req.body); 
+  res.status(201).json({ 
+    status: 'succuess',
+    code: 201,
+    payload: {contact},
+  })
 })
 
 router.delete('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
+  const contact = await contactsModel.removeContact(req.params.contactId); 
+  if (contact) {
+    return res.json({ 
+      status: 'succuess',
+      code: 200,
+      message: "contact deleted",
+      payload: {contact},
+    })    
+  } else {
+      return res.status(404).json({ 
+        status: 'error',
+        code: 404,
+        message: "Not found",
+      })    
+  }
 })
 
 router.put('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
+  const contact = await contactsModel.updateContact(req.params.contactId, req.body); 
+  if (contact) {
+    return res.json({ 
+      status: 'succuess',
+      code: 200,      
+      payload: {contact},
+    })    
+  } else {
+      return res.status(404).json({ 
+        status: 'error',
+        code: 404,
+        message: "Not found",
+      })    
+  }
 })
 
 module.exports = router
