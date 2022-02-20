@@ -1,8 +1,9 @@
-const express = require('express')
+const express = require('express');
+const router = express.Router();
+const contactsModel = require('../../models/contacts.js');
+const { schema } = require('./contacts-validation-schema.js');
+const {validateBody} = require('../../middlewares/validation.js')
 
-const router = express.Router()
-
-const contactsModel = require('../../models/contacts.js')
 
 router.get('/', async (req, res, next) => {
   const contactsList = await contactsModel.listContacts(); 
@@ -30,7 +31,7 @@ router.get('/:contactId', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', validateBody(schema), async (req, res, next) => {
   const contact = await contactsModel.addContact(req.body); 
   res.status(201).json({ 
     status: 'succuess',
