@@ -1,6 +1,14 @@
 // const fs = require('fs/promises')
+const { randomUUID } = require('crypto')
 
-const listContacts = async () => {}
+const DB = require('./db.js');
+const db = new DB('contacts.json');
+
+
+
+const listContacts = async () => {
+  return await db.read()
+}
 
 const getContactById = async (contactId) => {}
 
