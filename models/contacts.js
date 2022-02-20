@@ -1,4 +1,3 @@
-// const fs = require('fs/promises')
 const { randomUUID } = require('crypto')
 
 const DB = require('./db.js');
@@ -40,9 +39,10 @@ const addContact = async (body) => {
   return newContact
 }
 
-const updateContact = async (contactId, body) => {
+const updateContact = async (contactId, body) => {  
   const contacts = await db.read();
   const index = contacts.findIndex(contact => contact.id === contactId);
+
   if (index !== -1) {
     contacts[index] = {...contacts[index], ...body}
     await db.write(contacts);

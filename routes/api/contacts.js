@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const contactsModel = require('../../models/contacts.js');
-const { schema } = require('./contacts-validation-schema.js');
+const { contactsSchema, updateContactsSchema } = require('./contacts-validation-schema.js');
 const {validateBody} = require('../../middlewares/validation.js')
 
 
@@ -31,7 +31,7 @@ router.get('/:contactId', async (req, res, next) => {
   }
 })
 
-router.post('/', validateBody(schema), async (req, res, next) => {
+router.post('/', validateBody(contactsSchema), async (req, res, next) => {
   const contact = await contactsModel.addContact(req.body); 
   res.status(201).json({ 
     status: 'succuess',
@@ -58,15 +58,25 @@ router.delete('/:contactId', async (req, res, next) => {
   }
 })
 
-router.put('/:contactId', async (req, res, next) => {
+router.put('/:contactId', validateBody(updateContactsSchema), async (req, res, next) => {  
   const contact = await contactsModel.updateContact(req.params.contactId, req.body); 
+  
+  if (Object.keys(req.body).length === 0) { 
+    return res.status(404).json({ 
+        status: 'error',
+        code: 400,
+        message: "missing fields",
+    })    
+  };    
+
   if (contact) {
     return res.json({ 
       status: 'succuess',
       code: 200,      
       payload: {contact},
     })    
-  } else {
+  }
+  else {
       return res.status(404).json({ 
         status: 'error',
         code: 404,

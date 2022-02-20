@@ -1,5 +1,3 @@
-// const { schema } = require("../routes/api/contacts-validation-schema");
-
 const { json } = require("express/lib/response");
 
 const validateBody = (schema) => async (req, res, next) => {
