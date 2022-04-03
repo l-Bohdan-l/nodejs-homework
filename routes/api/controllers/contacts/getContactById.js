@@ -1,8 +1,8 @@
-const express = require('express');
-const router = express.Router();
+// const express = require('express');
+// const router = express.Router();
 const contactsModel = require('../../../../models/contacts/index.js');
 
-router.get('/:contactId', async (req, res, next) => {
+const getContactById = async function (req, res, next) {
     const contact = await contactsModel.getContactById(req.params.contactId);
     if (contact) {
         return res.json({
@@ -17,6 +17,6 @@ router.get('/:contactId', async (req, res, next) => {
             message: "Not found",
         })
     }
-});
+};
 
-module.exports = { router };
+module.exports = getContactById;

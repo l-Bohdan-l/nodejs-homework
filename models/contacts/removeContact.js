@@ -1,7 +1,7 @@
 const { randomUUID } = require('crypto')
 
 const DB = require('../../db/db.js');
-const db = new DB('../../db/contacts.json');
+const db = new DB('../db/contacts.json');
 
 const removeContact = async (contactId) => {
   const contacts = await db.read();
@@ -15,6 +15,4 @@ const removeContact = async (contactId) => {
   return null
 }
 
-module.exports = {
-    removeContact
-}
+module.exports = removeContact
