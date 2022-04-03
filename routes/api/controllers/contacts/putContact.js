@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const contactsModel = require('../../models/contacts/index.js');
-const { contactsSchema, updateContactsSchema } = require('../../schemas/contacts-validation-schema.js');
-const {validateBody} = require('../../middlewares/validation.js')
+const contactsModel = require('../../../../models/contacts/index.js');
+const { contactsSchema, updateContactsSchema } = require('../../../../schemas/contacts-validation-schema.js');
+const {validateBody} = require('../../../../middlewares/validation.js')
 
 router.put('/:contactId', validateBody(updateContactsSchema), async (req, res, next) => {
     const contact = await contactsModel.updateContact(req.params.contactId, req.body);
@@ -31,4 +31,4 @@ router.put('/:contactId', validateBody(updateContactsSchema), async (req, res, n
     }
 });
 
-module.exports = router;
+module.exports = { router };

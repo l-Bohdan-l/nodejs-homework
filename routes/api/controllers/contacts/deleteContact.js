@@ -20,4 +20,4 @@ router.delete('/:contactId', async (req, res, next) => {
     }
 });
 
-module.exports = router;
+module.exports = { router };

@@ -9,6 +9,6 @@ const getContactById = async (contactId) => {
   return contact
 }
 
-emodule.exports = {
+module.exports = {
     getContactById
 }
