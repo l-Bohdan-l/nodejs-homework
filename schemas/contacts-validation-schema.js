@@ -16,6 +16,10 @@ const contactsSchema = Joi.object({
         .min(6)
         .max(30)            
         .required()
+        .messages({ 'any.required': 'missing required phone field' }),
+    
+    favorite: Joi.boolean() 
+        .required()    
         .messages({'any.required': 'missing required phone field'}),
     
 });
@@ -31,6 +35,8 @@ const updateContactsSchema = Joi.object({
     phone: Joi.string()
         .min(6)
         .max(30),
+    
+    favorite: Joi.boolean(),         
     
 }).required();
 
