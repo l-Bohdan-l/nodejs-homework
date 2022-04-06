@@ -1,19 +1,19 @@
-const fs = require('fs/promises');
-const {join} = require('path')
 
-class FileAdapter {
-    constructor(file) {
-        this.file = file
-    }
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
-    async read() { 
-        const result = await fs.readFile(join(__dirname, this.file), 'utf-8')
-        return JSON.parse(result)
-    }
+const uri = "mongodb+srv://Goit37:<password>@cluster0.w6qzd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
-    async write(data) { 
-        await fs.writeFile(join(__dirname, this.file), JSON.stringify(data, null, 2))
-    };
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();   
+});
+
+const ddd = {       
+        ddd
+        dsdsd
+
+       as
+        as
 }
-
-module.exports = FileAdapter;

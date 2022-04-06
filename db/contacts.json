@@ -3,7 +3,8 @@
     "id": "1",
     "name": "Allen Raymond",
     "email": "nulla.ante@vestibul.co.uk",
-    "phone": "(992) 914-3792"
+    "phone": "(992) 914-3792",
+    "favorite": false
   },
   {
     "id": "2",
@@ -62,6 +63,12 @@
   {
     "id": "c7355086-3291-46c8-a4f8-855f1d2c18e6",
     "name": "James Bond",
+    "email": "bond@vestibul.co.uk",
+    "phone": "(777) 777-7777"
+  },
+  {
+    "id": "e0367cbe-2e36-47e8-8168-e1b830d337bb",
+    "name": "James Bond1",
     "email": "bond@vestibul.co.uk",
     "phone": "(777) 777-7777"
   }
