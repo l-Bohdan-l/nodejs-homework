@@ -9,9 +9,9 @@ const getCollection = async (db, collectionName) => {
 }
 
 const getContactById = async (contactId) => {
-  const objId = new ObjectId(contactId)
+  const objId = new ObjectId(contactId);
   const collection = await getCollection(DB, 'contacts');
-  const result = await collection.find({_id: objId}).toArray()
+  const [result] = await collection.find({ _id: objId }).toArray();
   return result
 }
 
