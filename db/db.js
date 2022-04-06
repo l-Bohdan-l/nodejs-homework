@@ -1,19 +1,23 @@
-
 const { MongoClient, ServerApiVersion } = require('mongodb');
+require('dotenv').config();
 
-const uri = "mongodb+srv://Goit37:<password>@cluster0.w6qzd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = 'mongodb+srv://user1:user1@cluster0.w6qzd.mongodb.net/db-contacts?retryWrites=true&w=majority';
 
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();   
-});
+const db = MongoClient.connect(uri,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1
+  });
 
-const ddd = {       
-        ddd
-        dsdsd
+process.on('SIGINT', async () => {
+  const client = await db
+  client.close()
+  console.log("Disconmected from DB")
+  process.exit(1)
+})
 
-       as
-        as
-}
+module.exports = db;
+
+
+
