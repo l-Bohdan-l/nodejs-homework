@@ -11,9 +11,9 @@ const db = MongoClient.connect(uri,
   });
 
 process.on('SIGINT', async () => {
+  console.log("Disconmected from DB")
   const client = await db
   client.close()
-  console.log("Disconmected from DB")
   process.exit(1)
 })
 
