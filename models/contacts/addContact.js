@@ -1,7 +1,7 @@
 const { randomUUID } = require('crypto')
 
 const getContactById = require('./getContactById.js');
-const DB = require('../../db/db.js');
+const DB = require('../../config/db.js');
 /// const db = new DB('../db/contacts.json');
 
 const getCollection = async (db, collectionName) => {

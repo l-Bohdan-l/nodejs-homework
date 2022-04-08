@@ -1,5 +1,5 @@
 const app = require('./app');
-const db = require('./db/db.js');
+const db = require('./config/db.js');
 
 db.then(() => {
   app.listen(3000, () => {

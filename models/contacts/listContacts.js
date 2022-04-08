@@ -1,6 +1,6 @@
 const { ObjectId } = require('mongodb')
 
-const DB = require('../../db/db.js');
+const DB = require('../../config/db.js');
 // const db = new DB('../db/contacts.json');
 
 const getCollection = async (db, collectionName) => {
