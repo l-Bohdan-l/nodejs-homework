@@ -1,20 +1,33 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const mongoose = require('mongoose')
+// const { MongoClient, ServerApiVersion } = require('mongodb');
 require('dotenv').config();
 
 const uri = process.env.URI_DB;
 
-const db = MongoClient.connect(uri,
+const db = mongoose.connect(uri,
   {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverApi: ServerApiVersion.v1
+    useUnifiedTopology: true,    
   });
 
+mongoose.connection.on('connected', () => {
+  console.log('Database connection successful');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.log(`Mongoose connection error: ${err}`);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('Disconnected from DB');
+});
+
 process.on('SIGINT', async () => {
-  console.log("Disconmected from DB")
-  const client = await db
-  client.close()
+  mongoose.connection.close(() => {
+  console.log("Disconmected from DB")  
   process.exit(1)
+  })
+
 })
 
 module.exports = db;

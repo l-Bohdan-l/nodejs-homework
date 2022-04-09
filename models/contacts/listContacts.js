@@ -1,17 +1,10 @@
-const { ObjectId } = require('mongodb')
+const Contact = require ('../../schemas/contactsSchema.js')
 
 const DB = require('../../config/db.js');
 // const db = new DB('../db/contacts.json');
 
-const getCollection = async (db, collectionName) => {
-  const client = await db 
-  const collection = client.db().collection(collectionName)
-  return collection
-}
-
-const listContacts = async () => { 
-  const collection = await getCollection(DB, 'contacts');
-  return await collection.find().toArray()
+const listContacts = async () => {
+  return await Contact.find()
 }
 
 module.exports = listContacts;

@@ -1,23 +1,18 @@
-const { ObjectId, ReturnDocument } = require('mongodb')
+const Contact = require('../../schemas/contactsSchema.js');
 
 
 const DB = require('../../config/db.js');
 // const db = new DB('../db/contacts.json');;
-const getCollection = async (db, collectionName) => {
-  const client = await db 
-  const collection = client.db().collection(collectionName)
-  return collection
-}
 
 const updateContact = async (contactId, body) => { 
-  const collection = await getCollection(DB, 'contacts');
-  const objId = new ObjectId(contactId);
-  const { value: result } = await collection.findOneAndUpdate(
-    { _id: objId },
-    { $set: body },
-    { returnDocument: 'after' },
-  );
+  const result = await Contact.findOneAndUpdate(
+    { _id: contactId },
+    { ...body },
+    { new: true },);
   return result
+
+ 
+  
   // const index = contacts.findIndex(contact => contact.id === contactId);
 
  
