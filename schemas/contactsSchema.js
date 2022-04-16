@@ -7,7 +7,11 @@ const contactSchema = new Schema({
   name:  {type: String, required: [true, 'Set name for contact'], min: NAME_LIMIT.min, max: NAME_LIMIT.max}, 
   email: {type: String, required: true, validate: [ validator.isEmail, 'invalid email' ]},
   phone: { type: String, required: true,  },
-  favorite: { type: Boolean, required: false, default: false, },  
+  favorite: { type: Boolean, required: false, default: false, }, 
+  owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+    },
 }, {versionKey: false, timestamps: true});
 
 const Contact = model('contact', contactSchema);
