@@ -1,14 +1,15 @@
-const express = require('express');
-const router = express.Router();
+// const express = require('express');
+// const router = express.Router();
 const contactsModel = require('../../../../models/contacts/index.js');
+const {HTTP_STATUS_CODE} = require('../../../../libs/constants.js')
 
-router.get('/', async (req, res, next) => {
+const getAllContacts = async function (req, res, next) {
     const contactsList = await contactsModel.listContacts();
     res.json({
         status: 'succuess',
-        code: 200,
+        code: HTTP_STATUS_CODE.OK,
         payload: { contactsList },
     })
-});
+};
 
-module.exports = router;
+module.exports = getAllContacts;

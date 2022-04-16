@@ -1,11 +1,7 @@
-// const express = require('express');
-// const router = express.Router();
 const contactsModel = require('../../../../models/contacts/index.js');
-// const { contactsSchema, updateContactsSchema } = require('../../../../schemas/contacts-validation-schema.js');
-// const {validateBody} = require('../../../../middlewares/validation.js')
 const { HTTP_STATUS_CODE } = require('../../../../libs/constants.js');
 
-const putContact = async function (req, res, next) {
+const updateStatusContact = async function (req, res, next) {
     const contact = await contactsModel.updateContact(req.params.contactId, req.body);
   
     if (Object.keys(req.body).length === 0) {
@@ -32,4 +28,4 @@ const putContact = async function (req, res, next) {
     }
 };
 
-module.exports = putContact;
+module.exports = updateStatusContact;

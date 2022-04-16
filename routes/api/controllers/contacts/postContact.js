@@ -1,16 +1,17 @@
-const express = require('express');
-const router = express.Router();
-const contactsModel = require('../../models/contacts/index.js');
-const { contactsSchema } = require('../../schemas/contacts-validation-schema.js');
-const {validateBody} = require('../../middlewares/validation.js')
+// const express = require('express');
+// const router = express.Router();
+const contactsModel = require('../../../../models/contacts/index.js');
+// const { contactsSchema } = require('../../../../schemas/contacts-validation-schema.js');
+// const {validateBody} = require('../../../../middlewares/validation.js')
+const {HTTP_STATUS_CODE} = require('../../../../libs/constants.js')
 
-router.post('/', validateBody(contactsSchema), async (req, res, next) => {
+const postContact = async function (req, res, next) {
     const contact = await contactsModel.addContact(req.body);
-    res.status(201).json({
+    res.status(HTTP_STATUS_CODE.CREATED).json({
         status: 'succuess',
-        code: 201,
+        code: HTTP_STATUS_CODE.CREATED,
         payload: { contact },
     })
-});
+};
 
-module.exports = router;
+module.exports = postContact;

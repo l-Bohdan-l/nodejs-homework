@@ -1,14 +1,11 @@
-const { randomUUID } = require('crypto')
+const Contact = require('../../schemas/contactsSchema.js');
 
-const DB = require('../../db/db.js');
-const db = new DB('../../db/contacts.json');
+const DB = require('../../config/db.js');
+// const db = new DB('../db/contacts.json');
+
 
 const getContactById = async (contactId) => {
-  const contacts = await db.read();
-  const contact = contacts.find(filteredContact => filteredContact.id === contactId);
-  return contact
+  return await Contact.findOne({_id: contactId})
 }
 
-emodule.exports = {
-    getContactById
-}
+module.exports = getContactById

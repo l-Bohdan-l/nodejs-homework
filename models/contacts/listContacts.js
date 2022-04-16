@@ -1,12 +1,10 @@
-const { randomUUID } = require('crypto')
+const Contact = require ('../../schemas/contactsSchema.js')
 
-const DB = require('../../db/db.js');
-const db = new DB('../../db/contacts.json');
+const DB = require('../../config/db.js');
+// const db = new DB('../db/contacts.json');
 
 const listContacts = async () => {
-  return await db.read()
+  return await Contact.find()
 }
 
-module.exports = {
-    listContacts
-}
+module.exports = listContacts;
