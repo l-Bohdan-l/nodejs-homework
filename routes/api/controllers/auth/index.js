@@ -1,15 +1,13 @@
-const authService = require('../../../../services/auth');
-const {HTTP_STATUS_CODE} = require('../../../../libs/constants.js')
+const express = require('express');
+const router = express.Router();
+const {wrapper: wrapperError} = require('../../../../middlewares/errorHandler')
 
-const registration = async (req, res) => {
+const login = require('./login.js');
+const logout = require ('./logout.js');
+const registration = require ('./registration');
 
-}
+router.post('/registration', wrapperError(registration));
+router.post('/login', wrapperError(login));
+router.post('/logout', wrapperError(logout));
 
-const login = async (req, res) => {
-
-}
-const logout = async (req, res) => {
-
-}
-
-module.exports = {registration, login, logout}
+module.exports = router;

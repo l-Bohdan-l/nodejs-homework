@@ -1,7 +1,4 @@
 const mongoose = require('mongoose')
-// const { MongoClient, ServerApiVersion } = require('mongodb');
-require('dotenv').config();
-
 const uri = process.env.URI_DB;
 
 const db = mongoose.connect(uri,
