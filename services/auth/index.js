@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const { HTTP_STATUS_CODE } = require("../../libs/constants");
 const { CustomError } = require("../../middlewares/errorHandler");
 const Users = require('../../models/user');
-const SECRET_KEY = process.env.JWT_SECRET_KEY;
+const SECRET_KEY = process.env.JWT_SECRET_KEY
 
 
 
@@ -52,8 +52,9 @@ class AuthService {
     } 
 
     generateToken(user) {
-        const payload = { id: user.id };
-        const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '2h'})
+        const payload = { id: user.id, name: user.name, role: user.role }
+        const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '2h' })
+        return token
     }
 }
 
