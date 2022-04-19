@@ -35,7 +35,9 @@ class AuthService {
         return {token}
     }
 
-    async logout(id) {}
+    async logout(id) {
+        await Users.updateToken(id, null)
+    }
     
     async getUser(email, password) {
         const user = await Users.findByEmail(email);
