@@ -4,8 +4,8 @@ const DB = require('../../config/db.js');
 // const db = new DB('../db/contacts.json');
 
 
-const getContactById = async (contactId) => {
-  return await Contact.findOne({_id: contactId})
+const getContactById = async (contactId, user) => {
+  return await Contact.findOne({_id: contactId, owner: user.id})
 }
 
 module.exports = getContactById

@@ -4,9 +4,9 @@ const Contact = require('../../schemas/contactsSchema.js');
 const DB = require('../../config/db.js');
 // const db = new DB('../db/contacts.json');;
 
-const updateContact = async (contactId, body) => { 
+const updateContact = async (contactId, body, user) => { 
   const result = await Contact.findOneAndUpdate(
-    { _id: contactId },
+    { _id: contactId, owner: user.id },
     { ...body },
     { new: true },);
   return result

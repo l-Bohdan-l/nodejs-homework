@@ -5,9 +5,9 @@ const DB = require('../../config/db.js');
 
 
 
-const updateStatusContact = async function (contactId, body) {
+const updateStatusContact = async function (contactId, body, user) {
   const result = await Contact.findOneAndUpdate(
-    { _id: contactId },
+    { _id: contactId, owner: user.id },
     { ...body },
     { new: true },);
   return result
