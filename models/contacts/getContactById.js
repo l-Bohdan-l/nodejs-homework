@@ -5,7 +5,10 @@ const DB = require('../../config/db.js');
 
 
 const getContactById = async (contactId, user) => {
-  return await Contact.findOne({_id: contactId, owner: user.id})
+  return await Contact.findOne({ _id: contactId, owner: user.id }).populate({
+    path: 'owner',
+    select: 'name email subscription'
+  })
 }
 
 module.exports = getContactById

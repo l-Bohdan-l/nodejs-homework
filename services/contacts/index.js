@@ -9,12 +9,27 @@ const SECRET_KEY = process.env.JWT_SECRET_KEY
 
 class ContactsService {
     async getAll(query, user) {
-        const contactsList = await Contact.listContacts();
-        return contactsList       
+        const { limit = 20, skip = 0, sortBy, sortByDesc, filter } = query;
+        let sortCriteria = null;
+        let select = null;
+        if (sortBy) {
+            sortCriteria = {[sortBy]: 1}
+        };
+
+        if (sortByDesc) {
+            sortCriteria = {[sortByDesc]: -1}
+        };
+        
+        if (filter) {
+            select = filter.split('|').join(' ')
+        };
+        
+        const {total, results: contactsList} = await Contact.listContacts({limit, skip, sortCriteria, select}, user);
+        return {total, contactsList}       
     };
 
     async getById(id, user) { 
-        const contact = await Contact.getContactById(id);
+        const contact = await Contact.getContactById(id, user);
 
         if (!contact) {
             throw new CustomError(HTTP_STATUS_CODE.NOT_FOUND, 'Not Found');
@@ -25,12 +40,12 @@ class ContactsService {
     }
 
     async create(body, user) {
-        const contact = await Contact.addContact(body);
+        const contact = await Contact.addContact(body, user);
         return contact
     }
     
     async update(id, body, user) {
-        const contact = await Contact.updateContact(id, body);
+        const contact = await Contact.updateContact(id, body, user);
         if (!contact) {
             throw new CustomError(HTTP_STATUS_CODE.NOT_FOUND, 'Not Found')
         }
@@ -39,7 +54,7 @@ class ContactsService {
     } 
 
     async remove(id, user) {
-        const contact = await Contact.removeContact(id);
+        const contact = await Contact.removeContact(id, user);
         if (!contact) {
             throw new CustomError(HTTP_STATUS_CODE.NOT_FOUND, 'Not Found')
         }

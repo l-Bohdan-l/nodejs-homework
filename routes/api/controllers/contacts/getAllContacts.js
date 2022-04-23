@@ -10,7 +10,7 @@ const getAllContacts = async function (req, res, next) {
     res.json({
         status: 'succuess',
         code: HTTP_STATUS_CODE.OK,
-        payload: { contactsList },
+        payload: { ...contactsList },
     })
 };
 
