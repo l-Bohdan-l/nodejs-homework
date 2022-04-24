@@ -24,8 +24,8 @@ class ContactsService {
             select = filter.split('|').join(' ')
         };
         
-        const {total, results: contactsList} = await Contact.listContacts({limit, skip, sortCriteria, select}, user);
-        return {total, contactsList}       
+        const result = await Contact.listContacts({limit, skip, sortCriteria, select}, user);
+        return result       
     };
 
     async getById(id, user) { 

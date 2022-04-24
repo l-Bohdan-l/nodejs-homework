@@ -1,5 +1,6 @@
 const mongoose = require ('mongoose');
 const { Schema, model } = mongoose;
+const mongoosePaginate = require('mongoose-paginate-v2');
 const validator = require('validator');
 const { NAME_LIMIT } = require('../libs/constants.js');
 
@@ -15,6 +16,7 @@ const contactSchema = new Schema({
     },
 }, {versionKey: false, timestamps: true});
 
+contactSchema.plugin(mongoosePaginate);
 const Contact = model('contact', contactSchema);
 
 module.exports = Contact;
