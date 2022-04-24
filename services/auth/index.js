@@ -48,7 +48,7 @@ class AuthService {
     }
 
     async logout(id) {
-        await Users.updateToken(id, null)
+        await Users.updateToken(id, null)        
     }
     
     async getUser(email, password) {
