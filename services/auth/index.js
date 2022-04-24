@@ -22,6 +22,18 @@ class AuthService {
         }
     };
 
+    async current(token) { 
+        const user = await Users.findByToken(token);
+        
+        if (!user) {
+            throw new CustomError(
+                HTTP_STATUS_CODE.UNAUTHORIZED,
+                'Invalid credentials'
+            )
+        }
+        return user
+    }
+
     async login({ email, password }) { 
         const user = await this.getUser(email, password)
         if (!user) {
