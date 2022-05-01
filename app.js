@@ -4,16 +4,22 @@ const cors = require('cors');
 
 const contactsRouter = require('./routes/api/controllers/contacts/index.js');
 const authRouter = require('./routes/api/controllers/auth/index.js');
+const usersRouter = require('./routes/api/controllers/users/index.js');
 
 const app = express();
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 
 app.use(logger(formatsLogger))
+app.use(express.static(process.env.STATIC_FOLDER))
+
 app.use(cors())
 app.use(express.json())
 
+
+
 app.use('/api/auth', authRouter)
+app.use('/api/users', usersRouter)
 app.use('/api/contacts', contactsRouter)
 
 app.use((req, res) => {
