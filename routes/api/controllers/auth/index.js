@@ -14,4 +14,7 @@ router.post('/login', wrapperError(login));
 router.post('/logout', guard, wrapperError(logout));
 router.get('/current', guard, wrapperError(current));
 
+router.get('/verify/:token', guard, wrapperError(verifyUser));
+router.post('/verify', guard, wrapperError(repeatEmailVarify));
+
 module.exports = router;

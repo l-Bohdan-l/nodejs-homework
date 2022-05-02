@@ -4,6 +4,8 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
 const { NAME_LIMIT } = require('../libs/constants.js');
+const {randomUUID} = require('crypto');
+const { string } = require('joi');
 
 
 const userSchema = new Schema({
@@ -33,6 +35,8 @@ const userSchema = new Schema({
       return gravatar.url(this.email, { s: 250 }, true)
     }
   },
+  isVerify: { type: Boolean, default: false },
+  verifyEmailToken: {type: String, default: randomUUID()},
 }, {versionKey: false, timestamps: true});
 
 userSchema.pre('save', async function (next) {
