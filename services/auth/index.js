@@ -18,9 +18,9 @@ class AuthService {
             throw new CustomError(HTTP_STATUS_CODE.CONFLICT, 'User already exists')
         }        
          
-        const newUser = await Users.createUser(body)
+        const newUser = await Users.createUser(body);
         
-        const sender = new SenderSendGrid()
+        const sender = new SenderSendGrid();
         const emailService = new EmailService(sender);
         try {
             await emailService.sendEmail(user.email, user.name, user.verifyEmailToken)            
