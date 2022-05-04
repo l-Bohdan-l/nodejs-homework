@@ -7,7 +7,9 @@ const guard = require('../../../../middlewares/guard.js');
 const login = require('./login.js');
 const logout = require ('./logout.js');
 const registration = require('./registration');
-const current = require ('./current');
+const current = require('./current');
+const verifyUser = require('./verifyUser.js');
+const reverifyEmail = require('./reverifyEmail.js')
 
 router.post('/signup', wrapperError(registration));
 router.post('/login', wrapperError(login));
