@@ -2,6 +2,10 @@ const jwt = require("jsonwebtoken");
 const { HTTP_STATUS_CODE } = require("../../libs/constants");
 const { CustomError } = require("../../middlewares/errorHandler");
 const Users = require('../../models/user');
+const SenderNodeMailer = require("../email/senders/nodemailer.sender");
+const SenderSendGrid = require("../email/senders/sendgrid.sender");
+const EmailService = ('../email/service.js');
+ 
 const SECRET_KEY = process.env.JWT_SECRET_KEY
 
 
@@ -12,8 +16,18 @@ class AuthService {
         const user = await Users.findByEmail(body.email);
         if (user) { 
             throw new CustomError(HTTP_STATUS_CODE.CONFLICT, 'User already exists')
+        }        
+         
+        const newUser = await Users.createUser(body)
+        
+        const sender = new SenderSendGrid()
+        const emailService = new EmailService(sender);
+        try {
+            await emailService.sendEmail(user.email, user.name, user.verifyEmailToken)            
+        } catch (error) {
+            console.log(error)            
         }
-         const newUser = await Users.createUser(body)
+
         return {
             id: newUser.id,
             name: newUser.name,
@@ -62,6 +76,10 @@ class AuthService {
         if (!(await user?.isValidPassword(password))) {
             return null
         }
+        
+        if (!user?.isVerify) {
+            throw new CustomError(HTTP_STATUS_CODE.BAD_REQUEST, 'User not verified')
+        }
 
         return user
     } 
@@ -73,11 +91,39 @@ class AuthService {
     }
 
     async verifyUser(token) {
+        const user = await Users.findByVerifyToken(token);
+        if (!user) { 
+            throw new CustomError(HTTP_STATUS_CODE.BAD_REQUEST, 'Invalid token')
+        }
+
+        if (user && user.isVerify) { 
+            throw new CustomError(HTTP_STATUS_CODE.BAD_REQUEST, 'User already verified')
+        }
+
+        await Users.verifyUser(user.id)
+        return user
 
      }
     
     async reverifyEmail(email) {
+         const user = await Users.findByEmail(email);
+        if (!user) { 
+            throw new CustomError(HTTP_STATUS_CODE.NOT_FOUND, 'User with such email not found')
+        }
+
+        if (user && user.isVerify) { 
+            throw new CustomError(HTTP_STATUS_CODE.BAD_REQUEST, 'User already verified')
+        }
         
+        const sender = new SenderSendGrid()
+        const emailService = new EmailService(sender);
+        try {
+            await emailService.sendEmail(user.email, user.name, user.verifyEmailToken)            
+        } catch (error) {
+            console.log(error)
+            throw new CustomError(HTTP_STATUS_CODE.SERVICE_UNAVAILABLE,
+            "Error sending email")
+        }
     }
 }
 
