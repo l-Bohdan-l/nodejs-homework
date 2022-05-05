@@ -20,10 +20,11 @@ class AuthService {
          
         const newUser = await Users.createUser(body);
         
-        const sender = new SenderSendGrid();
+        
+        const sender = new SenderNodeMailer();
         const emailService = new EmailService(sender);
         try {
-            await emailService.sendEmail(user.email, user.name, user.verifyEmailToken)            
+            await emailService.sendEmail(newUser.email, newUser.name, newUser.verifyEmailToken)            
         } catch (error) {
             console.log(error)            
         }
