@@ -4,7 +4,7 @@ const { CustomError } = require("../../middlewares/errorHandler");
 const Users = require('../../models/user');
 const SenderNodeMailer = require("../email/senders/nodemailer.sender");
 const SenderSendGrid = require("../email/senders/sendgrid.sender");
-const EmailService = ('../email/service.js');
+const EmailService = require('../email/service.js');
  
 const SECRET_KEY = process.env.JWT_SECRET_KEY
 
