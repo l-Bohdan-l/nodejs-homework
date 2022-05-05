@@ -40,8 +40,7 @@ class EmailService {
             html: emailTemplate
         }
         
-        const result = await this.sender.send(message)  
-        console.log(result)          
+        const result = await this.sender.send(message)               
         return result
 
     }
